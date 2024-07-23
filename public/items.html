@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu - Items</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-left">
+            <a href="/">
+                <img src="/images/logo.png" alt="Restaurant Logo">
+                <span data-key="main">Main</span>
+            </a>
+        </div>
+        <div class="nav-right">
+            <a href="/" data-key="main">Main</a>
+            <a href="/menu" data-key="menu">Menu</a>
+            <span class="language-switch" id="language-switch" data-en="EN" data-zh="中文">EN</span>
+        </div>
+    </nav>
+    <div id="menu-items" class="menu-container">
+        <h1>Menu Items</h1>
+        <div id="items-list"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const items = {
+                classic: {
+                    "Gin": [
+                        "Gin Tonic", "Gimlet", "Gin Fizz", "Vesper", "Negroni", "White Lady", 
+                        "亡者復甦二號", "Aviation", "Martini", "Poet’s Dream", "White Negroni", 
+                        "Ramos Gin Fizz", "Gin Gin Mule", "Gin Basil Smash"
+                    ],
+                    "Whiskey": [
+                        "Highball", "Whiskey Coke", "Whiskey Sour", "Old Fashioned", "Rusty Nail", 
+                        "Vieux Carré", "Old Pal", "King’s Valley", "God Father", "New York Sour", 
+                        "Manhattan", "Paper Plane", "Penicillin"
+                    ],
+                    "Rum": [
+                        "Daiquiri", "mojito", "Mai Tai", "Jungle Bird", "Hurricane", "Zombie"
+                    ],
+                    "Vodka": [
+                        "Vodka Lime", "莫斯科騾子", "cosmopolitan", "Sex on The Beach", "Kamikaze", 
+                        "Vodka Martini", "God Mother"
+                    ],
+                    "Tequila": [
+                        "Margarita", "Tequila Sunrise", "鬥牛士"
+                    ],
+                    "Brandy": [
+                        "Sidecar", "Brandy Alexander"
+                    ],
+                    "Others": [
+                        "Long Island Iced Tea", "Americano", "Sangria"
+                    ]
+                },
+                creative: [
+                    "No.16", "燕南紅", "謙謙君子", "56小姐", "夢雲瀚", "青蘋果樂園", "遊樂園", 
+                    "溫蒂公主的前任", "神秘香水", "By the way"
+                ]
+            };
+
+            const itemsList = document.getElementById('items-list');
+
+            function renderItems() {
+                const hash = window.location.hash.substring(1);
+                if (items.classic[hash]) {
+                    itemsList.innerHTML = `<h2>${hash} Cocktails</h2>`;
+                    const list = document.createElement('ul');
+                    items.classic[hash].forEach(drink => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = drink;
+                        list.appendChild(listItem);
+                    });
+                    itemsList.appendChild(list);
+                } else if (hash === 'creative') {
+                    itemsList.innerHTML = `<h2>Creative Specials</h2>`;
+                    const list = document.createElement('ul');
+                    items.creative.forEach(drink => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = drink;
+                        list.appendChild(listItem);
+                    });
+                    itemsList.appendChild(list);
+                } else {
+                    itemsList.innerHTML = '<p>No items available.</p>';
+                }
+            }
+
+            renderItems();
+            window.addEventListener('hashchange', renderItems);
+        });
+    </script>
+</body>
+</html>
+
