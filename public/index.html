@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-left">
+            <a href="/">
+                <img src="/images/logo.png" alt="Restaurant Logo">
+                <span data-key="main">Main</span>
+            </a>
+        </div>
+        <div class="nav-right">
+            <a href="/" data-key="main">Main</a>
+            <a href="/menu" data-key="menu">Menu</a>
+            <span class="language-switch" id="language-switch" data-en="EN" data-zh="中文">EN</span>
+        </div>
+    </nav>
+    <div id="content">
+        <div id="section1" class="section" data-key="welcome">Welcome to our Restaurant</div>
+        <div id="section2" class="section" data-key="specials">Enjoy Our Specials</div>
+        <div id="section3" class="section">
+            <div class="carousel">
+                <img src="/images/carousel1.jpg" class="active">
+                <img src="/images/carousel2.jpg">
+                <img src="/images/carousel3.jpg">
+            </div>
+        </div>
+        <div id="section4" class="section">
+            <div id="map"></div>
+            <div id="business-info">
+                <h2 data-key="business_info">Business Information</h2>
+                <p data-key="address">Address: 123 Main Street, City, Country</p>
+                <p data-key="phone">Phone: (123) 456-7890</p>
+                <p data-key="hours">Hours: Mon-Fri, 9am-10pm</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function initializeMap() {
+            const mapOptions = {
+                center: { lat: -34.397, lng: 150.644 },
+                zoom: 8
+            };
+
+            new google.maps.Map(document.getElementById('map'), mapOptions);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeMap();
+
+            const languageSwitch = document.getElementById('language-switch');
+            const elementsToTranslate = document.querySelectorAll('[data-key]');
+
+            function loadLanguage(language) {
+                fetch(`/locales/${language}.json`)
+                    .then(response => response.json())
+                    .then(data => {
+                        elementsToTranslate.forEach(el => {
+                            const key = el.getAttribute('data-key');
+                            el.textContent = data[key] || el.textContent;
+                        });
+                        languageSwitch.textContent = language === 'zh' ? 'EN' : '中文';
+                    });
+            }
+
+            function initialize() {
+                const currentLang = languageSwitch.textContent === 'EN' ? 'en' : 'zh';
+                loadLanguage(currentLang);
+            }
+
+            languageSwitch.addEventListener('click', () => {
+                const newLang = languageSwitch.textContent === 'EN' ? 'zh' : 'en';
+                loadLanguage(newLang);
+            });
+
+            initialize();
+        });
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
+</body>
+</html>
