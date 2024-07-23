@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-left">
+            <a href="/">
+                <img src="/images/logo.png" alt="Restaurant Logo">
+                <span data-key="main">Main</span>
+            </a>
+        </div>
+        <div class="nav-right">
+            <a href="/" data-key="main">Main</a>
+            <a href="/menu" data-key="menu">Menu</a>
+            <span class="language-switch" id="language-switch" data-en="EN" data-zh="中文">EN</span>
+        </div>
+    </nav>
+    <div class="menu-container">
+        <h1>Menu Categories</h1>
+        <ul class="category-list">
+            <li><a href="/items#classic">Classic Cocktails</a></li>
+            <li><a href="/items#creative">Creative Specials</a></li>
+        </ul>
+    </div>
+</body>
+</html>
